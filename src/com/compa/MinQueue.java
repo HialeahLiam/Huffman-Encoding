@@ -37,10 +37,8 @@ public class MinQueue {
         this.queue[1] =letter; // place last node of heap at head
 
         //reorder heap
-        //the first conditional
-        while (((FindFreq(letter, alphabet, freqs) > FindFreq(this.queue[letterIndex*2], alphabet, freqs)) ||
-                (FindFreq(letter, alphabet, freqs) > FindFreq(this.queue[letterIndex*2+1], alphabet, freqs))) &&
-                letterIndex<= (alphabet.length+1)) {
+        //the node is at the bottom depth at tree if its index in array is greater than the max number of nodes integer divided by 2
+        while (letterIndex<= (alphabet.length/2)) {
             //switches parent with left child
             if (FindFreq(letter, alphabet, freqs) > FindFreq(this.queue[letterIndex*2], alphabet, freqs)) {
                 this.queue[letterIndex] = this.queue[letterIndex*2];

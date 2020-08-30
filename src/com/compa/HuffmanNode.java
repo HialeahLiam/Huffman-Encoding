@@ -10,4 +10,6 @@ public class HuffmanNode {
         this.letter = letter;
         this.freq = freq;
     }
+    HuffmanNode() {
+    }
 }

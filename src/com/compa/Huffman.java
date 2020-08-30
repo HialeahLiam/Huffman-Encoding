@@ -23,7 +23,7 @@ class Huffman {
         this.head = Q.poll();
         CreateLookupTable(this.head);
     }
-// traverses Huffman tree to create codes for every symbol in alphabet
+// traverses Huffman tree to create lookup table with binary codes for every symbol in alphabet
     public void CreateLookupTable(HuffmanNode head) {
         this.lookupTable = new HashMap();
         String code = "";
@@ -51,10 +51,13 @@ class Huffman {
     }
 
     //takes in string of symbols and encodes into string of binary bits
-//    public String Encode(String input) {
-//
-//
-//    }
+    public String Encode(String input) {
+        String output = "";
+        for (int i=0; i<input.length(); i++) {
+            output += " " + this.lookupTable.get(input.charAt(i));
+        }
+        return output;
+    }
 
 
     public void BuildQueue(char[] alphabet, int[] freqs) {

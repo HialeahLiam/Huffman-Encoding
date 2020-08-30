@@ -9,30 +9,34 @@ public class Main {
 	// write your code here
         char[] alphabet = "abcdefg".toCharArray();
         int[] freqs = {1,3,6,2,7,4,8};
-        MinQueue Q = new MinQueue(alphabet, freqs);
-
-        System.out.println("Alphabet:");
-
-        for (int i=0; i< alphabet.length; i++) {
-            System.out.print("|" + alphabet[i]);
+        BuildHuffman huff = new BuildHuffman(alphabet, freqs);
+        while(true) {
+            HuffmanNode head = huff.Q.poll();
+            if (head == null) {
+                break;
+            }
+            System.out.println(head.letter + " " + head.freq);
         }
 
-        System.out.println("\n\n Priority Min Queue");
 
-        for (int i=0; i< Q.queue.length; i++) {
-            System.out.print("|" + Q.queue[i]);
-        }
+//        MinQueue Q = new MinQueue(alphabet, freqs);
 
-        System.out.println("\n\n Min extracted:");
+//        System.out.println("Priority Min Queue");
+//
+//        for (int i=0; i< Q.queue.length; i++) {
+//            System.out.print("|" + Q.queue[i]);
+//        }
 
-        System.out.println(Q.ExtractMin(alphabet, freqs));
-
-        System.out.println("\n\n Priority Min Queue");
-
-        for (int i=0; i< Q.queue.length; i++) {
-            System.out.print("|" + Q.queue[i]);
-        }
-
+//        while (true) {
+//            char extracted = Q.ExtractMin(alphabet, freqs);
+//            if (extracted == ' ') break;
+//            System.out.println("\nMin extracted:");
+//            System.out.println(extracted);
+//            System.out.println("Priority Min Queue");
+//            for (int i = 0; i < Q.queue.length; i++) {
+//                System.out.print("|" + Q.queue[i]);
+//            }
+//        }
 
     }
 }

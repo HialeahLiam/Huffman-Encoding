@@ -1,15 +1,17 @@
 package com.compa;
 
 import java.util.Comparator;
+import java.util.HashMap;
 import java.util.PriorityQueue;
 
-public class BuildHuffman {
+class Huffman {
 
     int alphabetSize = 0;
     PriorityQueue<HuffmanNode> Q;
     HuffmanNode head;
+    HashMap lookupTable;
 
-    BuildHuffman(char[] alphabet, int[] freqs) {
+    Huffman(char[] alphabet, int[] freqs) {
         this.BuildQueue(alphabet, freqs);
         for (int i=0; i<(alphabet.length-1); i++) {
             HuffmanNode node = new HuffmanNode();
@@ -18,25 +20,42 @@ public class BuildHuffman {
             node.freq = node.left.freq + node.right.freq;
             Q.add(node);
         }
-        head = Q.poll();
+        this.head = Q.poll();
+        CreateLookupTable(this.head);
+    }
+// traverses Huffman tree to create codes for every symbol in alphabet
+    public void CreateLookupTable(HuffmanNode head) {
+        this.lookupTable = new HashMap();
+        String code = "";
+        TraverseHuffman(head, lookupTable, code);
     }
 
-    public void PrintHuffman(HuffmanNode head) {
+//    Traverses Huffman tree and adds every leaf to code lookup table
+    public void TraverseHuffman(HuffmanNode head, HashMap lookupTable, String code) {
         if (head.left == null & head.right ==null) {
-            System.out.print(head.letter);
-            System.out.print("^");
+            lookupTable.put(head.letter, code);
             return;
         }
         if (head.left != null) {
-            System.out.print("v");
-            PrintHuffman(head.left);
+            String tempCode = code;
+            code += "0";
+            TraverseHuffman(head.left, lookupTable, code);
+            code = tempCode;
         }
         if (head.right != null) {
-            System.out.print("v");
-            PrintHuffman(head.right);
+            String tempCode = code;
+            code += "1";
+            TraverseHuffman(head.right, lookupTable, code);
+            code = tempCode;
         }
-        System.out.println("\n^");
     }
+
+    //takes in string of symbols and encodes into string of binary bits
+//    public String Encode(String input) {
+//
+//
+//    }
+
 
     public void BuildQueue(char[] alphabet, int[] freqs) {
         HuffmanComparator comp = new HuffmanComparator();

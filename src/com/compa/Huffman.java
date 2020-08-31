@@ -57,6 +57,7 @@ class Huffman {
         for (int i=0; i<input.length(); i++) {
             output += this.lookupTable.get(input.charAt(i));
         }
+//        System.out.println("Number of bits with encryption: " + output.length());
         return output;
     }
     //takes in string of binary bits and encodes into string of symbols
@@ -90,8 +91,15 @@ class Huffman {
             this.Q.add(node);
         }
     }
-//    public String ShowQueue(PriorityQueue Q) {
-//        String result = "";
-//
-//    }
+
+    // figures out how many bits you need to represent alphabet with uniform length encoding
+    public int NumberOfBits(char[] alphabet) {
+        int total = alphabet.length;
+        int bits = 0;
+        while (total != 0) {
+            bits++;
+            total /= 2;
+        }
+        return bits;
+    }
 }

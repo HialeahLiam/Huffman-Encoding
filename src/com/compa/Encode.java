@@ -1,2 +1,5 @@
-package com.compa;public class Encode {
+package com.compa;
+
+public class Encode {
+
 }

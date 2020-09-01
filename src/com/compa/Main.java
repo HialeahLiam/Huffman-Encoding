@@ -1,8 +1,9 @@
 package com.compa;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.IOException;
+import java.io.*;
+import java.nio.charset.Charset;
+import java.nio.charset.CharsetDecoder;
+import java.nio.charset.CharsetEncoder;
 import java.nio.file.Files;
 import java.util.*;
 
@@ -55,9 +56,10 @@ public class Main {
         } else {                                        //reads Tale of Two Cities
             List<Character> symList = new ArrayList<>();
             List<Integer> freqList = new ArrayList<>();
+            Charset charset = Charset.forName("UTF-8");
             File file = new File(args[0]);
             byte[] b = Files.readAllBytes(file.toPath());
-            message = new String(b);
+            message = new String(b, charset);
             for (int i = 0; i < message.length(); i++) {
                 System.out.println(".");
                 if (symList.contains(message.charAt(i))) {
@@ -68,6 +70,25 @@ public class Main {
                     int index = symList.indexOf(message.charAt(i));
                     freqList.add(index, 1);
                 }
+//            InputStream file = new FileInputStream(args[0]);
+//            Reader reader = new InputStreamReader(file, charset);
+////            FileReader fr = new FileReader(file);
+//            Reader br = new BufferedReader(reader);
+//            message = "";
+//            int ci;
+//            while ((ci = br.read()) != -1) {
+////                System.out.println(".");
+//                char c = (char) ci;
+//                message += c;
+//                System.out.print(c);
+//                if (symList.contains(c)) {
+//                    int index = symList.indexOf(c);
+//                    freqList.set(index, freqList.get(index) + 1);
+//                } else {
+//                    symList.add(c);
+//                    int index = symList.indexOf(c);
+//                    freqList.add(index, 1);
+//                }
             }
 
             System.out.println("Characters:");
@@ -96,12 +117,15 @@ public class Main {
         }
         Scanner sc = new Scanner(System.in);
         System.out.println("File scanned. Build Huffman Tree?");
-        if (sc.next() == "no" || sc.next() == "No") {
+
+        String ans = sc.next();
+        if (ans == "no" || ans == "No") {
             return;
         }
         Huffman huff = new Huffman(alphabet, freqs);
         System.out.println("Huffman Tree built. Encode text?");
-        if (sc.next() == "no" || sc.next() == "No") {
+        ans = sc.next();
+        if (ans == "no" || ans == "No") {
             return;
         }
         double start = System.currentTimeMillis();
@@ -109,11 +133,12 @@ public class Main {
         double end = System.currentTimeMillis();
         System.out.println("Encryption time:\t" + (end-start));
         System.out.println("Decode?");
-        if (sc.next() == "no" || sc.next() == "No") {
+        ans = sc.next();
+        if (ans == "no" || ans == "No") {
             return;
         }
         start = System.currentTimeMillis();
-        System.out.println("\n\n" + huff.Decode(encryption));
+        huff.Decode(encryption);
         end = System.currentTimeMillis();
         System.out.println("\nDecryption time:\t" + (end-start));
         System.out.println("Number of alphabet symbols:\t" + alphabet.length);
